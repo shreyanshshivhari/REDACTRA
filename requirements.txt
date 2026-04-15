@@ -1,0 +1,6 @@
+transformers
+datasets
+pandas
+scikit-learn
+torch
+torch --index-url https://download.pytorch.org/whl/cpu

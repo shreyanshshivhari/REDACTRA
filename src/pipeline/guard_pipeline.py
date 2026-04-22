@@ -10,22 +10,24 @@ def analyze_prompt(text):
         "action": "allow"
     }
 
-    # Step 1: Sensitive
+    # Step 1: Run all detectors first
     sensitive = detect_sensitive(text)
-    if sensitive:
-        result["sensitive_data"] = sensitive
-        result["action"] = "redact"
-
-    # Step 2: Jailbreak
-    if is_jailbreak(text):
-        result["jailbreak"] = True
-        result["action"] = "block"
-
-    # Step 3: Intent
+    jailbreak = is_jailbreak(text)
     intent = detect_intent(text)
+
+    # Store results
+    result["sensitive_data"] = sensitive
+    result["jailbreak"] = jailbreak
     result["intent"] = intent
 
-    if intent == "harmful" and not result["jailbreak"]:
+    # Step 2: Decision logic (PRIORITY BASED)
+    if sensitive:
+        result["action"] = "block"   # or "redact" if you prefer
+    elif jailbreak:
+        result["action"] = "block"
+    elif intent == "harmful":
         result["action"] = "warn"
+    else:
+        result["action"] = "allow"
 
     return result

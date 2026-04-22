@@ -1,11 +1,19 @@
 import re
 
 PATTERNS = {
-    "password": r"(?i)(pass\s*word|pass|pwd)\s*(?:is|=|:)?\s*([^\s]+)",
+    "password": r"(?i)\b(pass(word)?|pwd)\b\s*(?:is|=|:)?\s*([^\s]+)",
+
     "email": r"\b[\w\.-]+@[\w\.-]+\.\w+\b",
-    "api_key": r"(?i)api[_-]?key\s*[:=]?\s*\S+",
-    "phone": r"\b\d{10}\b",
-    "credential": r"(?i)(login|secret|credential)\s*(?:is|=|:)?\s*([^\s]+)"
+
+    "api_key": r"(?i)\b(api[\s_-]?key|token|auth[\s_-]?key)\b\s*(?:is|=|:)?\s*([A-Za-z0-9\-_]+)",
+
+    "phone": r"(?:(?:\+91[\-\s]?)?[6-9]\d{9})",
+
+    "otp": r"(?i)\b(otp|one[-\s]?time\s?password)\b\s*(?:is|=|:)?\s*(\d{4,6})",
+
+    "credit_card": r"\b(?:\d[ -]*?){13,16}\b",
+
+    "credential": r"(?i)\b(login|secret|credential)\b\s*(?:is|=|:)?\s*([^\s]+)"
 }
 
 def detect_sensitive(text):

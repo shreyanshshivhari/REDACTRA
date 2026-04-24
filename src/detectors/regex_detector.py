@@ -13,7 +13,7 @@ PATTERNS = {
 
     "credit_card": r"\b(?:\d[ -]*?){13,16}\b",
 
-    "credential": r"(?i)\b(login|secret|credential)\b\s*(?:is|=|:)?\s*([^\s]+)"
+    "credential": r"(?i)\b(secret|credential)\b\s*(?:is|=|:)\s*([A-Za-z0-9@#\-_!]{4,})"
 }
 
 def detect_sensitive(text):
